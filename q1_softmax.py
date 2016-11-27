@@ -21,7 +21,16 @@ def softmax(x):
     """
 
     ### YOUR CODE HERE
-    raise NotImplementedError
+    if len(x.shape) == 1:
+        m = np.copy(x).reshape(1, -1)
+    else:
+        m = np.copy(x)
+    m -= np.max(m, axis=1).reshape(-1, 1)
+    exps = np.exp(m)
+    sm = exps / np.sum(exps, axis=1).reshape(-1, 1)
+    if len(x.shape) == 1:
+        return sm.reshape(-1)
+    return sm
     ### END YOUR CODE
     
     return x
